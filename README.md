@@ -12,9 +12,13 @@ Snode = standby server
 In this article I used Debian 10 and Postgresql version 15. Install postgresql and repmgr on both servers.
 
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
 sudo apt-get update
+
 sudo apt-get -y install postgresql-15 postgresql-15-repmgr
+
 
 ## Set up the primary server:
 We need to add some parameters to config file in order to set up high availability.
