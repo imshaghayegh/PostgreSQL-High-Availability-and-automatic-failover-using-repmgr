@@ -7,7 +7,7 @@ The primary server is registered to the cluster, and the standby server is creat
 Pnode = primary server
 Snode = standby server
 
-Install PostgreSQL, repmgr:
+## Install PostgreSQL, repmgr:
 In this article I used Debian 10 and Postgresql version 15. Install postgresql and repmgr on both servers.
 
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -15,7 +15,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt-get update
 sudo apt-get -y install postgresql-15 postgresql-15-repmgr
 
-Set up the primary server:
+## Set up the primary server:
 We need to add some parameters to config file in order to set up high availability.
 update /etc/postgresql/15/main/postgresql.conf with the following values:
  
@@ -46,10 +46,10 @@ Host	replication	repmgr		192.168.86.0/24	trust
 Local	repmgr		repmgr					trust
 Host	repmgr		repmgr		192.168.86.0/24	trust
  
-Register the primary server into the cluster:
+## Register the primary server into the cluster:
 we can now use the repmgr tool to register our primary server node into the cluster. By running the repmgr primary register command on the primary server node, we will create a record of the primary node in the repmgr metadata.
 
-create a /etc/repmgr.conf file with this content:
+## create a /etc/repmgr.conf file with this content:
  
 node_id=1
 node_name=Pnode
@@ -63,20 +63,17 @@ service_restart_command='pg_ctlcluster 15 main restart'
 service_reload_command='pg_ctlcluster 15 main reload'
  
 and register the node into the cluster
- 
 repmgr -f /etc/repmgr.conf primary register
  
 check if the cluster is available via
 repmgr -f /etc/repmgr.conf cluster show –compact
  
 output should be similar to:
-ID | Name | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string
- 
-----+------+---------+-----------+----------+----------+----------+----------+-------------------------------------------------------------
- 
- 1  | pnode  | primary | * running |          | default  | 100      | 1        | host=172.7.7.11 user=repmgr dbname=repmgr connect_timeout=2
+## ID | Name | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string
+## ----+------+---------+-----------+----------+----------+----------+----------+-------------------------------------------------------------
+##  1  | pnode  | primary | * running |          | default  | 100      | 1        | host=172.7.7.11 user=repmgr dbname=repmgr connect_timeout=2
 
-Set up the secondary server
+## Set up the secondary server
 
 If the primary node is running the next step is to clone the primary server to create a standby server.
 
@@ -124,13 +121,12 @@ repmgr -h <primary node ip> -U repmgr -d repmgr -f /etc/repmgr.conf standby clon
 
 register the standby server
 repmgr -f /etc/repmgr.conf standby register
-Enable repmgrd for monitoring and failover handling
 
+## Enable repmgrd for monitoring and failover handling
 To enable monitoring and automatic failover handling, we need to set up repmgrd on all the PostgreSQL nodes
-
 repmgrd -f /etc/repmgr.conf -d
 
-References: 
+## References: 
 https://www.repmgr.org/
 https://www.linkedin.com/pulse/postgresql-high-availability-automatic-failover-using-vanzuita
 https://maggiminutes.com/install-postgresql-15-on-linux/
