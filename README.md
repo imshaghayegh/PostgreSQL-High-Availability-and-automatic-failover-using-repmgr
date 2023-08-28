@@ -1,3 +1,4 @@
+PostgreSQL High Availability and automatic failover using repmgr
 In this article, I will set up a Postgresql high-availability cluster with automatic failover using the REPMGR tool. This setup consists of two servers. One primary and one standby. We can also use three servers. One primary server and two standby servers. With the help of the repmgr tool, when the primary server fails, it will automatically elect a new primary server. This ensures that our PostgreSQL cluster remains highly available and capable of handling failover scenarios.
 
 The primary server is registered to the cluster, and the standby server is created by cloning the primary server. repmgrd monitors the cluster and facilitates automatic failover. It constantly checks the health of the primary server and the standby servers to ensure they are up and running. If the primary server goes down, repmgrd will automatically elect a new primary server from the available standby servers.
