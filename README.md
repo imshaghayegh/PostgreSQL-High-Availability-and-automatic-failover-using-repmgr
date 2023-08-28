@@ -5,6 +5,7 @@ The primary server is registered to the cluster, and the standby server is creat
 
 ## Servers:
 Pnode = primary server
+
 Snode = standby server
 
 ## Install PostgreSQL, repmgr:
