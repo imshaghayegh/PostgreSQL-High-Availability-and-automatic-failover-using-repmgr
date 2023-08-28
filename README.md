@@ -3,7 +3,7 @@ In this article, I will set up a Postgresql high-availability cluster with autom
 
 The primary server is registered to the cluster, and the standby server is created by cloning the primary server. repmgrd monitors the cluster and facilitates automatic failover. It constantly checks the health of the primary server and the standby servers to ensure they are up and running. If the primary server goes down, repmgrd will automatically elect a new primary server from the available standby servers.
 
-Servers:
+## Servers:
 Pnode = primary server
 Snode = standby server
 
