@@ -1,0 +1,1 @@
+# PostgreSQL-High-Availability-and-automatic-failover-using-repmgr
